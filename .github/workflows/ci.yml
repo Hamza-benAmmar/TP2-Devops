@@ -37,8 +37,6 @@ jobs:
           fetch-depth: 0  
 
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v2.1.0  
-        with:
-          args: "-Dsonar.projectKey=Hamza-benAmmar_TP2-Devops -Dsonar.organization=hamzabenammar"  
+        uses: sonarsource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
