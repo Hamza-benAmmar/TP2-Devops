@@ -72,21 +72,19 @@ jobs:
           pytest  # Run tests directly using pytest
 
   sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    needs: test  # Ensure this job runs after the tests are completed successfully
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-        
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          # You can provide additional configuration here if necessary
-          # but this GitHub Action will automatically configure SonarCloud
-          sonar.organization: HamzaBenAmmar  # Replace with your organization
-          sonar.projectKey: hamzabenammar  # Replace with your project key
-          sonar.sources: .  # Point to the source code directory
-          sonar.host.url: https://sonarcloud.io  # SonarCloud URL
+      name: SonarCloud
+      runs-on: ubuntu-latest
+      needs: test  # Ensure this job runs after the tests are completed successfully
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v2
+          
+        - name: SonarCloud Scan
+          uses: SonarSource/sonarcloud-github-action@v1  # Use the latest release version of the GitHub action
+          env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Ensure your token is stored in GitHub secrets
+          with:
+            sonar.organization: HamzaBenAmmar  # Replace with your organization name
+            sonar.projectKey: hamzabenammar  # Replace with your project key
+            sonar.sources: .  # Set the directory for your code
+            sonar.host.url: https://sonarcloud.io  # SonarCloud URL
