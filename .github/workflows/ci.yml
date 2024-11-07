@@ -39,6 +39,6 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v2.1.0  # Specify version for stability
         with:
-          args: "-Dsonar.projectKey=your_project_key -Dsonar.organization=your_organization"  # Replace with actual values
+          args: "-Dsonar.projectKey=hamzabenamar -Dsonar.organization=HamzaBenAmmar"  # Replace with actual values
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
