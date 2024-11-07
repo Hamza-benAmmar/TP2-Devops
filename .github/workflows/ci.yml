@@ -34,11 +34,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensures full history for accurate SonarCloud analysis
+          fetch-depth: 0  
 
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v2.1.0  # Specify version for stability
+        uses: sonarsource/sonarcloud-github-action@v2.1.0  
         with:
-          args: "-Dsonar.projectKey=Hamza-benAmmar_TP2-Devops -Dsonar.organization=HamzaBenAmmar"  # Replace with actual values
+          args: "-Dsonar.projectKey=Hamza-benAmmar_TP2-Devops -Dsonar.organization=HamzaBenAmmar"  
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
