@@ -9,7 +9,6 @@ users = []
 def home():
     return "Welcome to the Task Management API!"
 
-# Create a new task
 @app.route("/tasks", methods=["POST"])
 def create_task():
     task_data = request.json
@@ -21,12 +20,10 @@ def create_task():
     tasks.append(task)
     return jsonify(task), 201
 
-# Get all tasks
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
     return jsonify({"tasks": tasks}), 200
 
-# Update a task's completion status
 @app.route("/tasks/<int:task_id>", methods=["PUT"])
 def update_task(task_id):
     try:
@@ -39,14 +36,12 @@ def update_task(task_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# Delete a task
 @app.route("/tasks/<int:task_id>", methods=["DELETE"])
 def delete_task(task_id):
     global tasks
     tasks = [task for task in tasks if task["id"] != task_id]
     return jsonify({"message": "Task deleted"}), 200
 
-# Register a new user
 @app.route("/users", methods=["POST"])
 def register_user():
     user_data = request.json
@@ -58,7 +53,6 @@ def register_user():
     users.append(user)
     return jsonify(user), 201
 
-# Get all users
 @app.route("/users", methods=["GET"])
 def get_users():
     return jsonify({"users": users}), 200
