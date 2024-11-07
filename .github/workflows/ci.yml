@@ -29,15 +29,17 @@ jobs:
         run: |
           pytest --cov=app --cov-report=xml
 
-sonarcloud:
-  name: SonarCloud
-  runs-on: ubuntu-latest
-  needs: test
-  steps:
-    - uses: actions/checkout@v3
-      with:
-      fetch-depth: 0
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensures full history for accurate SonarCloud analysis
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@v2.1.0  # Specify version for stability
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
