@@ -83,13 +83,18 @@ jobs:
         with:
           fetch-depth: 0  # Ensure all history is fetched for SonarCloud analysis
 
+      - name: Set up Java 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'  # Install Java 17 to match SonarCloud requirements
+
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1  # It's better to use a stable release of the action (v1 instead of master)
+        uses: SonarSource/sonarcloud-github-action@v1  # Use stable release of the SonarCloud action
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          # Add project properties
+          # Add SonarCloud configuration properties (ensure your project key and organization are correct)
           sonar.organization: "HamzaBenAmmar"   # Replace with your actual organization name
           sonar.projectKey: "hamzabenammar"      # Replace with your actual project key
-          sonar.sources: "."                      # Specify source directories
-          sonar.host.url: "https://sonarcloud.io" # URL for SonarCloud
+          sonar.sources: "."                      # Specify source directory
+          sonar.host.url: "https://sonarcloud.io" # SonarCloud URL
