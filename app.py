@@ -11,7 +11,7 @@ def home():
 
 # BUG: Unrestricted route allows any data, no validation on "description" or other attributes
 @app.route("/tasks", methods=["POST"])
-def create_task():
+def CreateTask():
     task_data = request.json
     if not task_data or "title" not in task_data:
         return jsonify({"error": "Task title is required!"}), 400

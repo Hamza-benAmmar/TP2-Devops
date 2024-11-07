@@ -25,7 +25,9 @@ jobs:
       - name: Run tests
         run: |
           pytest --cov=app --cov-report=xml
+          coverage xml
 
+          
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
