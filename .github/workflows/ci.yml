@@ -1,3 +1,47 @@
+# name: CI Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v2
+#         with:
+#           python-version: '3.10'
+          
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+      
+#       - name: Run tests
+#         run: |
+#           pytest --cov=app --cov-report=xml
+
+#   sonarcloud:
+#     name: SonarCloud
+#     runs-on: ubuntu-latest
+#     needs: test
+#     steps:
+#       - uses: actions/checkout@v3
+#         with:
+#         fetch-depth: 0
+#       - name: SonarCloud Scan
+#         uses: SonarSource/sonarcloud-github-action@master
+#         env:
+#         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 name: CI Pipeline
 
 on:
@@ -19,24 +63,33 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.10'
-          
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
+
       - name: Run tests
         run: |
           pytest --cov=app --cov-report=xml
+
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code again for SonarCloud analysis
+        uses: actions/checkout@v3
         with:
-        fetch-depth: 0
+          fetch-depth: 0  # Ensure all history is fetched for SonarCloud analysis
+
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarcloud-github-action@v1  # It's better to use a stable release of the action (v1 instead of master)
         env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # Add project properties
+          sonar.organization: "HamzaBenAmmar"   # Replace with your actual organization name
+          sonar.projectKey: "hamzabenammar"      # Replace with your actual project key
+          sonar.sources: "."                      # Specify source directories
+          sonar.host.url: "https://sonarcloud.io" # URL for SonarCloud
